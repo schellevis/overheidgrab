@@ -1,0 +1,9 @@
+*.db
+*.db.wal
+cache*
+docs*
+.Rproj.user
+vendor/*
+composer.*
+*.csv
+*.json
