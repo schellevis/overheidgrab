@@ -8,7 +8,7 @@ rm -r chunks/*
 
 SRC_FILE="${1:-azc.db}"
 OUT_DIR="${2:-chunks}"
-CHUNK_SIZE="${3:-10M}"
+CHUNK_SIZE="${3:-1500M}"
 
 if [[ ! -f "$SRC_FILE" ]]; then
   echo "Bestand niet gevonden: $SRC_FILE" >&2

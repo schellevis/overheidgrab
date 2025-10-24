@@ -7,3 +7,8 @@ vendor/*
 composer.*
 *.csv
 *.json
+*.bak
+azc.duckdb
+blaat.tar.gz
+openoverheid.duckdb
+.R*Tmp*
