@@ -15,8 +15,7 @@ bk AS (
     CAST(DCTERMS_publisher AS VARCHAR)        AS gemeente,
     CAST(DC_title AS VARCHAR)                 AS titel,
     CAST('bekendmakingen' AS VARCHAR)         AS source,
-    CAST(NULL AS VARCHAR)                     AS openoverheid_source,
-    CAST(broodtekst AS VARCHAR)               AS tekst
+    CAST(NULL AS VARCHAR)                     AS openoverheid_source
   FROM bekendmakingen
 ),
 ri AS (
@@ -26,8 +25,7 @@ ri AS (
     CAST(gemeente AS VARCHAR)                 AS gemeente,
     CAST(COALESCE(name) AS VARCHAR)           AS titel,
     CAST('raadsinformatie' AS VARCHAR)        AS source,
-    CAST(NULL AS VARCHAR)                     AS openoverheid_source,
-    CAST(\"text\" AS VARCHAR)                 AS tekst
+    CAST(NULL AS VARCHAR)                     AS openoverheid_source
   FROM raadsinfo
 ),
 oo AS (
@@ -40,8 +38,7 @@ oo AS (
     CAST(m.author AS VARCHAR)                     AS gemeente,
     CAST(COALESCE(em.titel, m.title) AS VARCHAR)  AS titel,
     CAST('openoverheid' AS VARCHAR)               AS source,
-    CAST(em.aanbieder AS VARCHAR)                 AS openoverheid_source,
-    CAST(t.\"text\" AS VARCHAR)                   AS tekst
+    CAST(em.aanbieder AS VARCHAR)                 AS openoverheid_source
   FROM openoverheid_text_doc t
   LEFT JOIN openoverheid_files      f  ON f.path      = t.file_path
   LEFT JOIN openoverheid_meta       m  ON m.file_path = t.file_path
@@ -71,7 +68,7 @@ dbGetQuery(con, "
 ") |> print()
 
 dbGetQuery(con, "
-  SELECT hash, id, ts, titel, LEFT(tekst, 160) AS snippet
+  SELECT hash, id, ts
   FROM gecombineerd
   WHERE source = 'openoverheid'
   ORDER BY ts DESC

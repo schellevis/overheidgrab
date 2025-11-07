@@ -11,9 +11,8 @@ df <- dbGetQuery(
   con,
   "
   
-  SELECT *
+  SELECT hash,id
    FROM gecombineerd
-     WHERE source='openoverheid'
   ORDER BY ts DESC
   LIMIT 1000
   "

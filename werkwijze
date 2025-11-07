@@ -1,0 +1,35 @@
+werkwijze
+
+
+downloaden en parsen:
+
+# officiele bekendmakingen
+1) grab.php (of een variant)
+2) parse_total.php
+3) grab_all
+4) parse_docs
+5) parse_docs_2
+
+# raadsinfo_risicogebied_
+
+1) grab_raadsinfo.php (of een variant)
+2) import_raadsinfo.R 
+3) raadsinfo_naamfix
+4) raadsinfo_timestamps
+
+# open overheid
+
+1) grab_openoverheid (of variant)
+2) grab_all_openoverheid
+3) parse_openoverheid.R
+4) parse_total_openoverheid.php
+
+
+
+
+# aggrereren
+
+
+1) combineren
+2) inciudenten koppelen
+3) evt de flagging
