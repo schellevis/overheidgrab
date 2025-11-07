@@ -21,8 +21,6 @@ df <- dbGetQuery(
   OR ((tekst ilike '%aanwijzing%' and tekst ilike '%veiligheidsrisicogebied%') AND titel not ilike '%algemene plaatselijke verordening%' and titel not ilike '%apv%')
   AND gemeente not ilike '%Tweede Kamer%' and gemeente not ilike '%ministerie%' and titel not ilike '%lijst van ingekomen stukken%')
   ORDER BY ts desc
-  LIMIT 2000
-  OFFSET 2000
   "
 )
 
