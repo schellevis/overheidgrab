@@ -21,10 +21,10 @@ downloaden en parsen:
 
 1) grab_openoverheid (of variant)
 2) grab_all_openoverheid
-3) parse_openoverheid.R
-4) parse_total_openoverheid.php
+3) parse_total_openoverheid.php
+4) parse_openoverheid.R
 
-
+opschonen
 
 
 # aggrereren
@@ -33,3 +33,4 @@ downloaden en parsen:
 1) combineren
 2) inciudenten koppelen
 3) evt de flagging
+

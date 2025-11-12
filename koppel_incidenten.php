@@ -23,7 +23,7 @@ CREATE TABLE koppeling (
 
 $db->query($sql);
 
-$data = getData("SELECT id,hash FROM gecombineerd ORDER BY ts asc");
+$data = getData("SELECT id,hash,ts,gemeente FROM gecombineerd ORDER BY ts desc");
 
 foreach($data as $gc) {
     $o = $gc['id'];
@@ -33,19 +33,59 @@ foreach($data as $gc) {
     $parsed = str_replace("https://zoek.officielebekendmakingen.nl/","",$parsed);
     $parsed = str_replace(".html","",$parsed);
 
-    $rows[$parsed][$hash]["orig"] = $o;
+
+
+    $gemeente = strtolower($gc['gemeente']);
+    if(!isset($gemeente) || empty($gemeente)) {
+      continue;
+    }
+
+    $gemeente = str_replace(" ","_",$gemeente);
+    $gemeente = urlencode($gemeente);
+
+
+
+    $time = new DateTimeImmutable($gc['ts']);
+    if(!$time) {
+        continue;
+    }
+
+        $tijd = $time->format("oW");
+        
+
+   $rows[$gemeente][$tijd][$parsed][$hash]["orig"] = $o;
+
+
+//    echo $time->format("oW");
+//    echo("\n");  
+
 }
+
+//print_r($rows);
 
 $i = 1;
 
-foreach($rows as $id=>$row) {
-    
 
 
-    foreach($row as $hash=>$r) {
+foreach($rows as $gemeente=>$rowg) {
+    foreach($rowg as $tijd=> $rowt) {
+     
+
+       
+
+        foreach($rowt as $id=>$rowh) {
+            
+
+            
+
+        foreach($rowh as $hash=>$r) {
 
 
-        $orig = $r["orig"];
+                 echo("INCIDENT $i: ");
+                echo $gemeente." - ".$tijd." - ".$id."\n";
+            
+
+         $orig = $r["orig"];
 
         $sql = "INSERT INTO koppeling (hash,orig_id,identifier,incident) VALUES (
             '".$hash."',
@@ -54,10 +94,42 @@ foreach($rows as $id=>$row) {
             '".$i."'
         )";
 
-        $db->query($sql);
 
 
-    }
-    
-    $i++;
+
+    $db->query($sql);
+            
+
+        } 
+
+
+    }      $i++; }
 }
+
+
+// foreach($rows as $id=>$row) {
+    
+//   //  print_r($row);
+
+
+//     foreach($row as $hash=>$r) {
+
+
+//         $orig = $r["orig"];
+
+//         $sql = "INSERT INTO koppeling (hash,orig_id,identifier,incident) VALUES (
+//             '".$hash."',
+//             '".$orig."',
+//             '".$id."',
+//             '".$i."'
+//         )";
+
+//        $db->query($sql);
+
+//    //     echo $i." van ".count($rows)."\n";
+
+
+//     }
+    
+//     $i++;
+// }

@@ -18,10 +18,7 @@ df <- dbGetQuery(
    FROM gecombineerd
    LEFT JOIN koppeling ON koppeling.hash = gecombineerd.hash
    LEFT JOIN flagging ON flagging.identifier = koppeling.identifier
-  where (((titel ilike '%noodverordening' or (titel ilike '%risico%' and titel ilike '%veiligheid%' and titel ilike '%gebied%'))
-  and titel not ilike '%intrekken%' and titel not ilike '%intrekking%' and titel not ilike '%Woo-besluit%' and titel not ilike '%Woo-verzoek%')
-  OR ((tekst ilike '%aanwijzing%' and tekst ilike '%veiligheidsrisicogebied%') AND titel not ilike '%algemene plaatselijke verordening%' and titel not ilike '%apv%')
-  AND gemeente not ilike '%Tweede Kamer%' and gemeente not ilike '%ministerie%' and titel not ilike '%lijst van ingekomen stukken%')
+  where flagging.onduidelijk_twijfelgeval is not null
   ORDER BY gecombineerd.ts desc
   "
 )
@@ -29,7 +26,7 @@ df <- dbGetQuery(
 
 
 # Naar CSV wegschrijven
-write.csv(df, "besluiten.csv", row.names = FALSE)
+write.csv(df, "twijfel.csv", row.names = FALSE)
 
 # Verbinding netjes sluiten
 dbDisconnect(con, shutdown = TRUE)

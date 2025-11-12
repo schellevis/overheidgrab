@@ -7,6 +7,8 @@ use Saturio\DuckDB\DuckDB;
 use Saturio\DuckDB\Type\Type;
 $db = DuckDB::create($database);
 
+// deze niet
+
 $all = scandir("cache_openoverheid");
 $all = array_diff($all, [".", "..", ".DS_Store"]);
 
@@ -52,6 +54,7 @@ foreach($all as $file) {
         if(isset($pub["document"]["pid"])) {
         $pid = $pub["document"]["pid"];
         $id = $pub["document"]["id"];
+        
 
         $bestandsnaam = "docs_openoverheid/".$id.".pdf";
 
@@ -66,6 +69,19 @@ foreach($all as $file) {
             }
 
            
+
+            $pid = $pub["document"]["pid"];
+        $id  = $pub["document"]["id"];
+        $filename = "docs_openoverheid/" . $id . ".pdf";
+        $weblocatie = $pub["document"]["weblocatie"] ?? null;
+
+        // ✅ Controle: bestaat dit bestand al in de tabel?
+        $existsQuery = "SELECT COUNT(*) AS n FROM openoverheid_extrameta WHERE filename = '$filename'";
+        $check = getData($existsQuery);
+        if($check[1]["n"] != 0) { continue; }
+
+
+
 
         $uniqid = uniqid();
 
